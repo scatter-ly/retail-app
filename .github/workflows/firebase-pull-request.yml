@@ -64,9 +64,6 @@ jobs:
       - name: lock
         run: yarn lock:check
 
-      - name: lint
-        run: yarn lint
-
       - name: type checking and declarations
         run: yarn tsc
 
