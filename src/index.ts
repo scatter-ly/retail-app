@@ -6,7 +6,7 @@ const app: Express = express();
 const port = '8080';
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Crates Frontend');
+  res.send('Retail App');
 });
 
 app.listen(port, () => {
