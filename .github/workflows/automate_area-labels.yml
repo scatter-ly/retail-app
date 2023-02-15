@@ -2,6 +2,11 @@ name: Automate area labels
 on:
   - pull_request_target
 
+permissions:
+  checks: write
+  contents: read
+  pull-requests: write
+
 jobs:
   triage:
     runs-on: ubuntu-latest
