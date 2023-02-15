@@ -1,0 +1,104 @@
+name: Build and Deploy App to Cloud Run
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: 16.x
+  NODE_OPTIONS: --max-old-space-size=4096
+  PROJECT_ID: vpc-host-nonprod-345521
+  GAR_LOCATION: us
+  REPOSITORY: np-docker
+  SERVICE: oc
+  REGION: us-central1
+
+jobs:
+  deploy:
+    environment: dev
+    # Add 'id-token' with the intended permissions for workload identity federation
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Create dot env files and Google SA file
+        run: |
+          echo "$GCP_SA_CLOUDRUN_DEV" > gcp-sa.json
+          chmod 600 gcp-sa.json
+        env:
+          GCP_SA_CLOUDRUN_DEV: ${{ secrets.FIREBASE_SA_PRODUCT_DEVELOPMENT_326216 }}
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: find location of global yarn cache
+        id: yarn-cache
+        if: steps.cache-modules.outputs.cache-hit != 'true'
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+
+      - name: cache global yarn cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: yarn install
+        if: steps.cache-modules.outputs.cache-hit != 'true'
+        run: yarn install --frozen-lockfile
+      # End of yarn setup
+      
+      # FIXME !!! Turn full typechecking back on tsc:full
+      - name: type checking and declarations
+        run: yarn tsc
+
+      - name: yarn build
+        run: yarn build
+
+      - name: Google Auth
+        id: auth
+        uses: 'google-github-actions/auth@v0'
+        with:
+          credentials_json: ${{ secrets.FIREBASE_SA_PRODUCT_DEVELOPMENT_326216 }}
+
+      # Authenticate Docker to Google Cloud Artifact Registry
+      - name: Docker Auth
+        id: docker-auth
+        uses: 'docker/login-action@v2'
+        with:
+          username: _json_key
+          password: ${{ secrets.FIREBASE_SA_PRODUCT_DEVELOPMENT_326216 }}
+          registry: '${{ env.GAR_LOCATION }}-docker.pkg.dev'
+
+      - name: Build and Push Container
+        run: |-
+          docker compose build 
+          docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:latest"
+
+      # END - Docker auth and build
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@v0
+        with:
+          service: ${{ env.SERVICE }}
+          region: ${{ env.REGION }}
+          # NOTE: If using a pre-built image, update the image name here
+          image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:latest
+          # NOTE: You can also set env variables here:
+          #  env_vars: |
+          #  NODE_ENV=production
+          #  TOKEN_EXPIRE=6400
+
+      # If required, use the Cloud Run url output in later steps
+      - name: Show Output
+        run: echo ${{ steps.deploy.outputs.url }}
