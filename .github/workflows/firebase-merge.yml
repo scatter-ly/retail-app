@@ -16,7 +16,7 @@ jobs:
   build_and_deploy:
     environment:
       name: qa-hosting
-      url: https://portal.qa.opencontext.com
+      url: https://retail.qa.opencontext.com
     env:
       CI: true
       NODE_OPTIONS: --max-old-space-size=4096
@@ -33,8 +33,8 @@ jobs:
           echo "$FIREBASE_SERVICE_ACCOUNT_DEV" | base64 --decode > firebase-sa-dev.json
           chmod 600 firebase-sa-dev.json
         env: 
-          REACT_APP_GCP_ERRORS_PROJECT_KEY: '${{ secrets.GCP_ERRORS_ACCOUNT_PRODUCT_DEVELOPMENT_326216 }}'
-          FIREBASE_SERVICE_ACCOUNT_DEV: ${{ secrets.FIREBASE_SA_PRODUCT_DEVELOPMENT_326216_BASE64 }}
+          REACT_APP_GCP_ERRORS_PROJECT_KEY: '${{ secrets.GCP_ERRORS_ACCOUNT_PRODUCT_DEVELOPMENT }}'
+          FIREBASE_SERVICE_ACCOUNT_DEV: ${{ secrets.FIREBASE_SA_PRODUCT_DEVELOPMENT_BASE64 }}
 
       # BEGIN yarn setup
       # The caching in the action does not cache node_modules which is needed to avoid reinstalling
@@ -72,7 +72,7 @@ jobs:
         run: yarn lint
 
       - name: type checking and declarations
-        run: yarn tsc:full
+        run: yarn tsc
 
       # Using env:test since this will change the authDomain to portal.dev.opencontext.com
       - name: Build app for Development
@@ -81,23 +81,10 @@ jobs:
           export GOOGLE_APPLICATION_CREDENTIALS=${PWD}/firebase-sa-dev.json
           yarn clean && yarn env:test && yarn build
       
-      - name: Deploy everything except hosting and functions to Product Development
-        id: deploy-except-hosting-functions-dev
-        if: ${{ steps.yarn-clean-build-dev.outcome == 'success' }}
-        run: |
-          export GOOGLE_APPLICATION_CREDENTIALS=${PWD}/firebase-sa-dev.json
-          yarn firebase deploy --except hosting,functions
-          rm -f ${PWD}/firebase-sa-dev.json
-
       - name: Deploy to Firebase Hosting in Product Development
         id: deploy-to-dev
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        if: ${{ steps.deploy-except-hosting-functions-dev.outcome == 'success' }} 
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SA_PRODUCT_DEVELOPMENT_326216 }}'
-          channelId: live
-          projectId: product-development-326216
+        run: |
+          echo "Deploy to Firebase Hosting in Dev"
 
       - name: Change environment to QA and build
         id: change-to-qa-build
@@ -111,22 +98,10 @@ jobs:
           export GOOGLE_APPLICATION_CREDENTIALS=${PWD}/firebase-sa-qa.json
           yarn clean && yarn env:qa && yarn build
         env: 
-          REACT_APP_GCP_ERRORS_PROJECT_KEY: '${{ secrets.GCP_ERRORS_ACCOUNT_PRODUCT_QA_360418 }}'
-          FIREBASE_SERVICE_ACCOUNT_QA: ${{ secrets.FIREBASE_SA_PRODUCT_QA_360418_BASE64 }}
-
-      - name: Deploy everything except hosting and functions to Product QA
-        id: deploy-except-hosting-functions-qa
-        if: ${{ steps.change-to-qa-build.outcome == 'success' }}
-        run: |
-          export GOOGLE_APPLICATION_CREDENTIALS=${PWD}/firebase-sa-qa.json
-          yarn firebase deploy --except hosting,functions
-          rm -f ${PWD}/firebase-sa-qa.json
+          REACT_APP_GCP_ERRORS_PROJECT_KEY: '${{ secrets.GCP_ERRORS_ACCOUNT_PRODUCT_QA }}'
+          FIREBASE_SERVICE_ACCOUNT_QA: ${{ secrets.FIREBASE_SA_PRODUCT_QA_BASE64 }}
 
       - name: Deploy to Firebase Hosting in Product QA
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        if: ${{ steps.deploy-except-hosting-functions-qa.outcome == 'success' }} 
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SA_PRODUCT_QA_360418 }}'
-          channelId: live
-          projectId: product-qa-360418
+        id: deploy-to-qa
+        run: |
+          echo "Deploy to Firebase Hosting in QA"

@@ -35,6 +35,7 @@
   },
   "scripts": {
     "dev": "yarn build:watch && node dist/index.js",
+    "build": "tsc --noEmit false",
     "build:watch": "yarn env:dev && tsc --watch --noEmit false",
     "build:dev": "yarn env:dev && tsc --noEmit false",
     "clean": "rm -rf node_modules/.cache && rm -rf dist",

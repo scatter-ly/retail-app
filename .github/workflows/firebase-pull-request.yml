@@ -13,7 +13,7 @@ jobs:
   build_and_preview:
     environment:
       name: dev
-      url: https://crates.dev.scatter.ly
+      url: https://retail.dev.scatter.ly
     env:
       CI: true
       NODE_OPTIONS: --max-old-space-size=4096
@@ -29,8 +29,8 @@ jobs:
           echo "$FIREBASE_SERVICE_ACCOUNT" | base64 --decode > firebase-sa.json
           chmod 600 firebase-sa.json
         env:
-          REACT_APP_GCP_ERRORS_PROJECT_KEY: '${{ secrets.GCP_ERRORS_ACCOUNT_PRODUCT_DEVELOPMENT_326216 }}'
-          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SA_PRODUCT_DEVELOPMENT_326216_BASE64 }}
+          REACT_APP_GCP_ERRORS_PROJECT_KEY: '${{ secrets.GCP_ERRORS_ACCOUNT_PRODUCT_DEVELOPMENT }}'
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SA_PRODUCT_DEVELOPMENT_BASE64 }}
 
       # BEGIN yarn setup
       # The caching in the action does not cache node_modules which is needed to avoid reinstalling
@@ -68,7 +68,7 @@ jobs:
         run: yarn lint
 
       - name: type checking and declarations
-        run: yarn tsc:full
+        run: yarn tsc
 
       # Using env:dev since this is a Firebase generated URL and env:dev does not change the authDomain
       - name: Build app

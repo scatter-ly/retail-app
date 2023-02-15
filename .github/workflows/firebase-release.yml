@@ -12,7 +12,7 @@ jobs:
   build_and_deploy_hosting:
     environment: 
       name: staging
-      url: https://crates.staging.scatter.ly
+      url: https://retail.staging.scatter.ly
 
     env:
       CI: true
@@ -28,8 +28,8 @@ jobs:
           echo "$FIREBASE_SERVICE_ACCOUNT" | base64 --decode > firebase-sa.json
           chmod 600 firebase-sa.json
         env:
-          REACT_APP_GCP_ERRORS_PROJECT_KEY: '${{ secrets.GCP_ERROR_ACCOUNT_PRODUCT_STAGING_360220 }}'
-          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SA_PRODUCT_STAGING_360220_BASE64 }}
+          REACT_APP_GCP_ERRORS_PROJECT_KEY: '${{ secrets.GCP_ERROR_ACCOUNT_PRODUCT_STAGING }}'
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SA_PRODUCT_STAGING_BASE64 }}
 
       # BEGIN yarn setup
       # The caching in the action does not cache node_modules which is needed to avoid reinstalling
@@ -66,7 +66,7 @@ jobs:
         run: yarn lint
 
       - name: type checking and declarations
-        run: yarn tsc:full
+        run: yarn tsc
 
       - name: Build app
         id: yarn-clean-build-hosting
