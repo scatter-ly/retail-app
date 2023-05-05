@@ -1,6 +1,7 @@
 apiVersion: opencontext.com/v1alpha1
 kind: CodeComponentSidecar
 metadata:
+  namespace: scatter-ly
   name: retail-app-extras
 spec:
   codecomponent: scatter-ly/retail-app
@@ -10,6 +11,7 @@ spec:
 apiVersion: opencontext.com/v1alpha1
 kind: AuxComponent
 metadata:
+  namespace: scatter-ly
   name: retail-app-maintenance
   title: Retail App Maintenance
   description: Maintenance documentation
@@ -26,6 +28,7 @@ spec:
 apiVersion: opencontext.com/v1alpha1
 kind: AuxComponent
 metadata:
+  namespace: scatter-ly
   name: retail-app-threat-model
   title: Retail App Threat Model
   description: Threat Model documentation
@@ -42,6 +45,7 @@ spec:
 apiVersion: opencontext.com/v1alpha1
 kind: AuxComponent
 metadata:
+  namespace: scatter-ly
   name: retail-app-migration-plan
   title: Retail App Migration Plan
   description: Migration Plan documentation
@@ -58,6 +62,7 @@ spec:
 apiVersion: opencontext.com/v1alpha1
 kind: AuxComponent
 metadata:
+  namespace: scatter-ly
   name: retail-app-ownership
   title: Retail App Service Ownership
   description: Service Ownership documentation
