@@ -5,7 +5,7 @@ metadata:
   name: retail-app-extras
 spec:
   codecomponent: scatter-ly/retail-app
-  platform: retail
+  service: retail
   lifecycle: production
 ---
 apiVersion: opencontext.com/v1alpha1
@@ -21,7 +21,7 @@ spec:
   type: document
   lifecycle: production
   owner: [scatter-ly/eng-squirrel]
-  platform: retail
+  service: retail
   uri: https://www.notion.so/opencontext/Retail-App-Maintenance-49a977c54d074d1aae70eea154a1680e
   dependsOn: [code-component:scatter-ly/retail-app]
 ---
@@ -38,7 +38,7 @@ spec:
   type: document
   lifecycle: production
   owner: [scatter-ly/eng-squirrel]
-  platform: retail
+  service: retail
   uri: https://www.notion.so/opencontext/Retail-App-Threat-Model-a02f5c6c4ee24400a94bf8953e420387
   dependsOn: [code-component:scatter-ly/retail-app]
 ---
@@ -55,7 +55,7 @@ spec:
   type: document
   lifecycle: production
   owner: [scatter-ly/prod-squirrel]
-  platform: retail
+  service: retail
   uri: https://www.notion.so/opencontext/Retail-App-Migration-Plan-300557d741b34c6d87993f1c31e7130a
   dependsOn: [code-component:scatter-ly/retail-app]
 ---
@@ -72,6 +72,6 @@ spec:
   type: document
   lifecycle: production
   owner: [scatter-ly/prod-squirrel]
-  platform: retail
+  service: retail
   uri: https://www.notion.so/opencontext/Retail-App-Service-Ownership-Doc-6361695aea6f443ab78ad49926258f21
   dependsOn: [code-component:scatter-ly/retail-app]
