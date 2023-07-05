@@ -89,8 +89,8 @@ metadata:
     - url: https://example.com/dashboard
       title: Retail VM Dashboard
       icon: dashboard
-  #annotations:
-  #  pagerduty.com/service-id: 'PAGERDUTY_SERVICE_ID'
+  annotations:
+    pagerduty.com/service-id: 'P2S21AB'
 spec:
   type: vm
   subtype: micro
@@ -102,28 +102,28 @@ spec:
   priority: 1
   sla: 24x7
 ---
-apiVersion: opencontext.com/v1alpha1
-kind: PlatformComponent
-metadata:
-  namespace: scatter-ly
-  name: retail-dns
-  description: Blue Sky / Retail DNS
-  links:
-    - url: https://example.com/dns-docs
-      title: Retail DNS docs
-      icon: docs
-  #annotations:
-  #  pagerduty.com/integration-key: 'PAGERDUTY_INTEGRATION_KEY'
-spec:
-  type: dns
-  lifecycle: production
-  owner: [scatter-ly/it-ops]
-  platform: [scatter-ly/retail]
-  datacenter: [scatter-ly/gcp]
-  dependencyOf:
-    [
-      'code-component:scatter-ly/retail-app',
-      'code-component:scatter-ly/retail-backend',
-    ]
-  priority: 1
-  sla: 24x7
+#apiVersion: opencontext.com/v1alpha1
+#kind: PlatformComponent
+#metadata:
+#  namespace: scatter-ly
+#  name: retail-dns
+#  description: Blue Sky / Retail DNS
+#  links:
+#    - url: https://example.com/dns-docs
+#      title: Retail DNS docs
+#      icon: docs
+#  annotations:
+#    pagerduty.com/integration-key: 'PAGERDUTY_INTEGRATION_KEY'
+#spec:
+#  type: dns
+#  lifecycle: production
+#  owner: [scatter-ly/it-ops]
+#  platform: [scatter-ly/retail]
+#  datacenter: [scatter-ly/gcp]
+#  dependencyOf:
+#    [
+#      'code-component:scatter-ly/retail-app',
+#      'code-component:scatter-ly/retail-backend',
+#    ]
+#  priority: 1
+#  sla: 24x7
