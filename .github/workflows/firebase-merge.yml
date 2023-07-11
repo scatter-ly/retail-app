@@ -50,7 +50,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: '**/node_modules'
-          key: ${{ runner.os }}-v16-node_modules-${{ github.base_ref }}-client-portal-${{ hashFiles('yarn.lock', 'package.json') }}
+          key: ${{ runner.os }}-v16-node_modules-${{ github.base_ref }}-retail-app-${{ hashFiles('yarn.lock', 'package.json') }}
 
       # If we get a cache hit for node_modules, there's no need to run yarn install
       # as all dependencies will be installed already.
