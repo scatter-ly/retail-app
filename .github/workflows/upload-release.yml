@@ -20,6 +20,7 @@ jobs:
         id: sbom
         env: 
           GITHUB_TOKEN: ${{ github.token }}
+
       - name: Upload SBOM for Release
         uses: softprops/action-gh-release@v1
         with:
