@@ -1,7 +1,7 @@
 version: '3'
 services:
   testenv:
-    image: us-docker.pkg.dev/vpc-host-nonprod-345521/np-docker/testenv:latest
+    image: us-docker.pkg.dev/vpc-host-nonprod-345521/np-docker/retail-app:latest
     build: 
       context: ./
       dockerfile: ./Dockerfile
