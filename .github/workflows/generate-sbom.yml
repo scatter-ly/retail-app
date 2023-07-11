@@ -24,8 +24,6 @@ jobs:
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
-        with:
-          languages: javascript, typescript
 
       - name: cache all node_modules
         id: cache-modules
