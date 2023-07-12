@@ -22,7 +22,18 @@ jobs:
         env: 
           GITHUB_TOKEN: ${{ github.token }}
 
-      - name: Upload SBOM for Release
+      - id: upload-sbom
+        name: Upload SBOM for Release
         uses: softprops/action-gh-release@v1
         with:
           files: ${{steps.sbom.outputs.fileName }}
+
+      - id: generate-artifact-context
+        name: Generate Artifact Context
+        uses: scatter-ly/artifact-context@main
+        with:
+          artifact-type: SBOM
+          url: ${{ fromJSON(steps.upload-sbom.outputs.assets)[0].browser_download_url }}
+
+      - name: Show context
+        run: cat ${{ steps.generate-artifact-context.outputs.filename }}
