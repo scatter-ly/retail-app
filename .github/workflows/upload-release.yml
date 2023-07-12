@@ -30,7 +30,7 @@ jobs:
 
       - id: generate-artifact-context
         name: Generate Artifact Context
-        uses: scatter-ly/artifact-context@v2
+        uses: scatter-ly/artifact-context@v2.1
         with:
           artifact-type: SBOM
           url: ${{ fromJSON(steps.upload-sbom.outputs.assets)[0].browser_download_url }}
