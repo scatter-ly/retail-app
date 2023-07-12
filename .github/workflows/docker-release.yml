@@ -1,7 +1,5 @@
 name: Test docker action
 on:
-  release:
-    types: [created]
   push:
     tags:
       - "v*.*.*"
