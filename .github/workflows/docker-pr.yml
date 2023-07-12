@@ -1,0 +1,14 @@
+name: Test docker action
+on:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: scatter-ly/test-action@main
+        with:
+          artifact-type: SBOM
+          url: http://example.com
