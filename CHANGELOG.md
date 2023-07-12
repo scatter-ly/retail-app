@@ -1,4 +1,8 @@
 # retail-app
+## v0.1.3 (2023-07-11)
+
+Another quick patch
+
 ## v0.1.2 (2023-07-11)
 
 Add SBOM
