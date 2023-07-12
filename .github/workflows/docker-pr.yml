@@ -12,3 +12,5 @@ jobs:
         with:
           artifact-type: SBOM
           url: http://example.com
+      - name: Check for file
+        run: ls -l
