@@ -1,4 +1,8 @@
 # retail-app
+## v0.2.0 (2023-07-13)
+
+Second beta release!
+
 ## v0.1.11 (2023-07-13)
 
 Squashed bug
