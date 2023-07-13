@@ -1,4 +1,8 @@
 # retail-app
+## v0.2.1 (2023-07-13)
+
+Quick Patch
+
 ## v0.2.0 (2023-07-13)
 
 Second beta release!
