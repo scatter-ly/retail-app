@@ -1,4 +1,8 @@
 # retail-app
+## v0.1.11 (2023-07-13)
+
+Squashed bug
+
 ## v0.1.10 (2023-07-13)
 
 Patch again
