@@ -1,4 +1,8 @@
 # retail-app
+## v0.1.8 (2023-07-13)
+
+Patch again
+
 ## v0.1.7 (2023-07-12)
 
 Patching one by one
