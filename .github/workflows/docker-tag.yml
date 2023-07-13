@@ -1,6 +1,9 @@
-name: Test docker action PR
+name: Test docker action tag
 on:
-  pull_request:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
 
 jobs:
   test:

@@ -1,10 +1,7 @@
-name: Test docker action
+name: Test docker action release
 on:
   release:
     types: [created]
-  push:
-    tags:
-      - "v*.*.*"
   workflow_dispatch:
 
 jobs:
