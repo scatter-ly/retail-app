@@ -1,14 +1,4 @@
 apiVersion: opencontext.com/v1alpha1
-kind: CodeComponentSidecar
-metadata:
-  namespace: scatter-ly
-  name: retail-app-extras
-spec:
-  codecomponent: scatter-ly/retail-app
-  service: retail
-  lifecycle: production
----
-apiVersion: opencontext.com/v1alpha1
 kind: AuxComponent
 metadata:
   namespace: scatter-ly
