@@ -1,0 +1,19 @@
+name: Test docker action push main
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: scatter-ly/test-action@main
+        with:
+          type: sbom
+          url: http://example.com
+      - name: Check for file
+        run: ls -l

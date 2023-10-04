@@ -1,6 +1,6 @@
 {
   "name": "@opencontext/testenv",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "private": true,
   "license": "UNLICENSED",
   "opencontext": {
@@ -39,7 +39,9 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "@types/eslint": "^8.4.5",
+    "@types/eslint-config-prettier": "^6.11.0",
     "@types/express": "^4.17.14",
+    "@types/lint-staged": "^13.2.0",
     "@types/prettier": "^2.7.1",
     "@types/react-router": "5.1.19",
     "@types/react-router-dom": "5.3.3",

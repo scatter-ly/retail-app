@@ -17,9 +17,9 @@ jobs:
 
       - uses: advanced-security/sbom-generator-action@v0.0.1
         id: sbom
-        env: 
+        env:
           GITHUB_TOKEN: ${{ github.token }}
       - uses: actions/upload-artifact@v3.1.0
-        with: 
+        with:
           path: ${{steps.sbom.outputs.fileName }}
           name: "SBOM"

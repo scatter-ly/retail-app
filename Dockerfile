@@ -13,13 +13,8 @@ COPY dist ./dist
 
 # install sqlite3 dependencies
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends python3 && \
     rm -rf /var/lib/apt/lists/* && \
-    rm -rf /var/cache/apt/* && \
-    mkdir -p /app/configs/creds && mkdir -p /app/configs/github && \
-    yarn config set python /usr/bin/python3
-
-RUN yarn install --frozen-lockfile --production --network-timeout 300000 && rm -rf "$(yarn cache dir)"
+    rm -rf /var/cache/apt/*
 
 # Then copy the rest of the backend bundle, along with any other files we might want.
 
