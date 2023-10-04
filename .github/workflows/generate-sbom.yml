@@ -6,8 +6,7 @@ on:
 
   workflow_dispatch:
 
-permissions:
-  security-events: write
+permissions: read-all
 
 jobs:
   build:
@@ -16,47 +15,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-          cache: 'yarn'
-          cache-dependency-path: 'yarn.lock'
-
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
-        with:
-          languages: javascript, typescript
-
-      - name: cache all node_modules
-        id: cache-modules
-        uses: actions/cache@v3
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-v16-node_modules-${{ github.base_ref }}-retail-app-${{ hashFiles('yarn.lock', 'package.json') }}
-
-      # If we get a cache hit for node_modules, there's no need to run yarn install
-      # as all dependencies will be installed already.
-      - name: yarn install
-        if: steps.cache-modules.outputs.cache-hit != 'true'
-        run: yarn install --frozen-lockfile
-
-      - name: type checking and declarations
-        run: yarn tsc
-
-      - name: Build app
-        id: yarn-clean-build
-        run: |
-          yarn clean && yarn env:prod && yarn build
-
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
-
       - uses: advanced-security/sbom-generator-action@v0.0.1
         id: sbom
-        env: 
+        env:
           GITHUB_TOKEN: ${{ github.token }}
-
       - uses: actions/upload-artifact@v3.1.0
-        with: 
+        with:
           path: ${{steps.sbom.outputs.fileName }}
           name: "SBOM"
