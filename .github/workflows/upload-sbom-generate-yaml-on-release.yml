@@ -1,0 +1,27 @@
+name: Upload SBOM and generate artifact context on release
+on:
+  release:
+    types: [created]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - id: sbom
+        uses: opencontextinc/generate-sbom-yaml@v1
+        with:
+          upload_yaml: false
+      - name: Check outputs
+        run: |
+          env
+          pwd
+          ls -l
+          ls ${{ steps.sbom.outputs.sbom_path }}
+          ls ${{ steps.sbom.outputs.artifact_path }}
+          echo "SBOM PATH = ${{ steps.sbom.outputs.sbom_path }}"
+          echo "SBOM URL = ${{ steps.sbom.outputs.sbom_url }}"
+          echo "Artifact YAML PATH = ${{ steps.sbom.outputs.artifact_path }}"
+          echo "Artifact YAML URL = ${{ steps.sbom.outputs.artifact_url }}"
