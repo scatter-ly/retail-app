@@ -117,3 +117,26 @@ spec:
 #    ]
 #  priority: 1
 #  sla: 24x7
+---
+apiVersion: opencontext.com/v1alpha1
+kind: AuxComponent
+metadata:
+  namespace: scatter-ly
+  name: retail-app-bb43745-sbom-spdx.json
+  title: retail-app-bb43745-sbom-spdx.json
+  links:
+    - url: https://github.com/scatter-ly/retail-app/releases/download/v0.3.1/retail-app-bb43745-sbom-spdx.json
+      title: retail-app-bb43745-sbom-spdx.json
+    - url: https://github.com/scatter-ly/retail-app/actions/runs/6580262013
+      title: GitHub Action Run 6580262013
+  annotations:
+    github.com/project-slug: scatter-ly/retail-app
+spec:
+  type: sbom
+  uri: https://github.com/scatter-ly/retail-app/releases/download/v0.3.1/retail-app-bb43745-sbom-spdx.json
+  lifecycle: production
+  owner:
+    - scatter-ly/alchen99
+  dependsOn:
+    - codecomponent:scatter-ly/retail-app
+
