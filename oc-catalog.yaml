@@ -166,7 +166,7 @@ apiVersion: opencontext.com/v1alpha1
 kind: PlatformComponent
 metadata:
   namespace: scatter-ly
-  name: retail-app
+  name: container-retail-app-v0.3.3
   title: retail-app:v0.3.3
   links:
     - url: https://github.com/scatter-ly/retail-app/actions/runs/6751982857
@@ -181,4 +181,33 @@ spec:
     - scatter-ly/alchen99
   dependsOn:
     - codecomponent:scatter-ly/retail-app
+---
+apiVersion: opencontext.com/v1alpha1
+kind: PlatformComponent
+metadata:
+  namespace: scatter-ly
+  name: retail-cloud-run
+  description: Retail Cloud Run Instance
+  links:
+    - url: https://example.com/cloud
+      title: Cloud Console
+      icon: cloud
+    - url: https://example.com/dashboard
+      title: Retail Cloud Run Console
+      icon: dashboard
+  annotations:
+    pagerduty.com/service-id: 'P2S21AB'
+spec:
+  type: cloudrun
+  subtype: EXECUTION_ENVIRONMENT_GEN2
+  lifecycle: development
+  owner: [scatter-ly/eng-raccoon-cloud]
+  platform: [scatter-ly/retail]
+  datacenter: [scatter-ly/gcp]
+  dependsOn:
+    - platformcomponent:scatter-ly/container-retail-app-v0.3.3
+  dependencyOf: 
+    - code-component:scatter-ly/retail-app
+  priority: 1
+  sla: 24x7
 
