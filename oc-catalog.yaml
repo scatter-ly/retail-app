@@ -205,9 +205,8 @@ spec:
   platform: [scatter-ly/retail]
   datacenter: [scatter-ly/gcp]
   dependsOn:
+    - codecomponent:scatter-ly/retail-app
     - platformcomponent:scatter-ly/container-retail-app-v0.3.3
-  dependencyOf: 
-    - code-component:scatter-ly/retail-app
   priority: 1
   sla: 24x7
 
