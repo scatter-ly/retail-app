@@ -35,7 +35,7 @@ jobs:
         uses: opencontextinc/create-artifact-yaml@v1
         with:
           type: container
-          url: us-docker.pkg.dev/vpc-host-nonprod-345521/np-docker/scatterly/pretty-army-energy-brisk-hotel-grass-desert-talk-hat-moon-leopard-model:latest
+          url: us-docker.pkg.dev/vpc-host-nonprod-345521/np-docker/scatterly/retail-app:v0.3.1
       - name: Check container results
         shell: bash
         run: |
@@ -45,8 +45,30 @@ jobs:
           tar tvfz ${{ steps.create-container-artifact-yaml.outputs.filename }}
       - uses: actions/upload-artifact@v3.1.0
         with:
-          name: container-artifact
+          name: retail-container-artifact
           path: ${{ steps.create-container-artifact-yaml.outputs.filename }}
+
+  check_container_long:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - id: create-container-long-artifact-yaml
+        name: Create container artifact YAML
+        uses: opencontextinc/create-artifact-yaml@v1
+        with:
+          type: container
+          url: us-docker.pkg.dev/vpc-host-nonprod-345521/np-docker/scatterly/pretty-army-energy-brisk-hotel-grass-desert-talk-hat-moon-leopard-model:latest
+      - name: Check container results
+        shell: bash
+        run: |
+          echo "Create artifact yaml filename is ${{ steps.create-container-artifact-yaml.outputs.filename }}"
+          echo "Create artifact yaml directory is ${{ steps.create-container-artifact-yaml.outputs.directory }}"
+          cat ${{ steps.create-container-long-artifact-yaml.outputs.directory }}/*
+          tar tvfz ${{ steps.create-container-long-artifact-yaml.outputs.filename }}
+      - uses: actions/upload-artifact@v3.1.0
+        with:
+          name: long-container-artifact
+          path: ${{ steps.create-container-long-artifact-yaml.outputs.filename }}
 
   check_sbom:
     runs-on: ubuntu-latest
