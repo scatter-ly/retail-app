@@ -179,7 +179,7 @@ spec:
   uri: us-docker.pkg.dev/vpc-host-nonprod-345521/np-docker/retail-app:v0.3.3
   owner:
     - scatter-ly/alchen99
-  dependsOn:
+  dependencyOf:
     - codecomponent:scatter-ly/retail-app
 ---
 apiVersion: opencontext.com/v1alpha1
@@ -204,7 +204,7 @@ spec:
   owner: [scatter-ly/eng-raccoon-cloud]
   platform: [scatter-ly/retail]
   datacenter: [scatter-ly/gcp]
-  dependsOn:
+  dependencyOf:
     - codecomponent:scatter-ly/retail-app
     - platformcomponent:scatter-ly/container-retail-app-v0.3.3
   priority: 1
