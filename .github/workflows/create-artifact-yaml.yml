@@ -21,6 +21,9 @@ jobs:
           echo "Create artifact yaml directory is ${{ steps.create-image-artifact-yaml.outputs.directory }}"
           cat ${{ steps.create-image-artifact-yaml.outputs.directory }}/*
           tar tvfz ${{ steps.create-image-artifact-yaml.outputs.filename }}
+      - uses: actions/upload-artifact@v3.1.0
+        with:
+          path: ${{ steps.create-image-artifact-yaml.outputs.filename }}
 
   check_container:
     runs-on: ubuntu-latest
@@ -31,7 +34,7 @@ jobs:
         uses: opencontextinc/create-artifact-yaml@v1
         with:
           type: container
-          url: us-docker.pkg.dev/vpc-host-nonprod-345521/np-docker/pretty-army-energy-brisk-hotel-grass-desert-talk-hat-moon-leopard-model:latest
+          url: us-docker.pkg.dev/vpc-host-nonprod-345521/np-docker/scatterly/pretty-army-energy-brisk-hotel-grass-desert-talk-hat-moon-leopard-model:latest
       - name: Check container results
         shell: bash
         run: |
@@ -39,6 +42,9 @@ jobs:
           echo "Create artifact yaml directory is ${{ steps.create-container-artifact-yaml.outputs.directory }}"
           cat ${{ steps.create-container-artifact-yaml.outputs.directory }}/*
           tar tvfz ${{ steps.create-container-artifact-yaml.outputs.filename }}
+      - uses: actions/upload-artifact@v3.1.0
+        with:
+          path: ${{ steps.create-container-artifact-yaml.outputs.filename }}
 
   check_sbom:
     runs-on: ubuntu-latest
@@ -57,6 +63,9 @@ jobs:
           echo "Create artifact yaml directory is ${{ steps.create-sbom-artifact-yaml.outputs.directory }}"
           cat ${{ steps.create-sbom-artifact-yaml.outputs.directory }}/*
           tar tvfz ${{ steps.create-sbom-artifact-yaml.outputs.filename }}
+      - uses: actions/upload-artifact@v3.1.0
+        with:
+          path: ${{ steps.create-sbom-artifact-yaml.outputs.filename }}
 
   check_package:
     runs-on: ubuntu-latest
@@ -75,6 +84,9 @@ jobs:
           echo "Create artifact yaml directory is ${{ steps.create-package-artifact-yaml.outputs.directory }}"
           cat ${{ steps.create-package-artifact-yaml.outputs.directory }}/*
           tar tvfz ${{ steps.create-package-artifact-yaml.outputs.filename }}
+      - uses: actions/upload-artifact@v3.1.0
+        with:
+          path: ${{ steps.create-package-artifact-yaml.outputs.filename }}
 
   check_output_dir:
     runs-on: ubuntu-latest
@@ -94,3 +106,7 @@ jobs:
           echo "Create artifact yaml directory is ${{ steps.create-sbom2-artifact-yaml.outputs.directory }}"
           cat ${{ steps.create-sbom2-artifact-yaml.outputs.directory }}/*
           tar tvfz ${{ steps.create-sbom2-artifact-yaml.outputs.filename }}
+      - uses: actions/upload-artifact@v3.1.0
+        with:
+          path: ${{ steps.create-sbom2-artifact-yaml.outputs.filename }}
+
