@@ -194,11 +194,13 @@ metadata:
       title: Cloud Console
       icon: cloud
 spec:
-  type: docker-registry
+  type: registry
+  subtype: docker
   lifecycle: ACTIVE
   uri: us-docker.pkg.dev/vpc-host-nonprod-345521/np-docker
-  owner:
-    - scatter-ly/eng-raccoon-cloud
+  owner: [scatter-ly/eng-raccoon-cloud]
+  platform: [scatter-ly/retail]
+  datacenter: [scatter-ly/gcp-us]
   dependencyOf:
     - platformcomponent:scatter-ly/container-retail-app-v0.3.3
 ---
@@ -223,7 +225,7 @@ spec:
   lifecycle: development
   owner: [scatter-ly/eng-raccoon-cloud]
   platform: [scatter-ly/retail]
-  datacenter: [scatter-ly/gcp]
+  datacenter: [scatter-ly/gcp-us-central1]
   dependsOn:
     - platformcomponent:scatter-ly/container-retail-app-v0.3.3
   priority: 1
