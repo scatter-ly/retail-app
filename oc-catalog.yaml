@@ -88,7 +88,7 @@ spec:
   owner: [scatter-ly/it-ops]
   platform: [scatter-ly/retail]
   datacenter: [scatter-ly/aws, scatter-ly/gcp]
-  dependencyOf: ['code-component:scatter-ly/retail-app', 'code-component:scatter-ly/retail-backend']
+  dependsOn: ['code-component:scatter-ly/retail-app', 'code-component:scatter-ly/retail-backend']
   priority: 1
   sla: 24x7
 ---
