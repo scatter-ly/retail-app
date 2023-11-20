@@ -179,7 +179,27 @@ spec:
   uri: us-docker.pkg.dev/vpc-host-nonprod-345521/np-docker/retail-app:v0.3.3
   owner:
     - scatter-ly/alchen99
-  dependencyOf:
+  dependsOn:
+    - codecomponent:scatter-ly/retail-app
+    - platformcomponent:scatter-ly/registry-us-docker-vpc-host-nonprod-345521-np-docker
+---
+apiVersion: opencontext.com/v1alpha1
+kind: PlatformComponent
+metadata:
+  namespace: scatter-ly
+  name: registry-us-docker-vpc-host-nonprod-345521-np-docker
+  title: us-docker.pkg.dev/vpc-host-nonprod-345521/np-docker
+  links:
+    - url: https://example.com/cloud
+      title: Cloud Console
+      icon: cloud
+spec:
+  type: docker-registry
+  lifecycle: ACTIVE
+  uri: us-docker.pkg.dev/vpc-host-nonprod-345521/np-docker
+  owner:
+    - scatter-ly/eng-raccoon-cloud
+  dependsOn:
     - codecomponent:scatter-ly/retail-app
 ---
 apiVersion: opencontext.com/v1alpha1
@@ -204,7 +224,7 @@ spec:
   owner: [scatter-ly/eng-raccoon-cloud]
   platform: [scatter-ly/retail]
   datacenter: [scatter-ly/gcp]
-  dependencyOf:
+  dependsOn:
     - codecomponent:scatter-ly/retail-app
     - platformcomponent:scatter-ly/container-retail-app-v0.3.3
   priority: 1
