@@ -227,7 +227,7 @@ spec:
   uri: us-docker.pkg.dev/vpc-host-nonprod-345521/np-docker/retail-app:v0.3.4
   owner:
     - scatter-ly/alchen99
-  dependsOn:
+  dependencyOf:
     - codecomponent:scatter-ly/retail-app
 ---
 apiVersion: opencontext.com/v1alpha1
