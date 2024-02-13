@@ -1,4 +1,9 @@
 # retail-app
+
+## v0.3.4 (2024-02-12)
+
+New Year new patch.
+
 ## v0.2.1 (2023-07-13)
 
 Quick Patch
