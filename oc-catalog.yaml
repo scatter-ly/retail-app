@@ -209,4 +209,46 @@ spec:
     - platformcomponent:scatter-ly/container-retail-app-v0.3.3
   priority: 1
   sla: 24x7
+---
+apiVersion: opencontext.com/v1alpha1
+kind: PlatformComponent
+metadata:
+  namespace: scatter-ly
+  name: retail-app
+  title: retail-app:v0.3.4
+  links:
+    - url: https://github.com/scatter-ly/retail-app/actions/runs/7880705969
+      title: GitHub Action Run 7880705969
+  annotations:
+    github.com/project-slug: scatter-ly/retail-app
+spec:
+  type: container
+  lifecycle: ACTIVE
+  uri: us-docker.pkg.dev/vpc-host-nonprod-345521/np-docker/retail-app:v0.3.4
+  owner:
+    - scatter-ly/alchen99
+  dependsOn:
+    - codecomponent:scatter-ly/retail-app
+---
+apiVersion: opencontext.com/v1alpha1
+kind: AuxComponent
+metadata:
+  namespace: scatter-ly
+  name: retail-app-81f9482-sbom-spdx.json
+  title: retail-app-81f9482-sbom-spdx.json
+  links:
+    - url: https://github.com/scatter-ly/retail-app/releases/download/v0.3.4/retail-app-81f9482-sbom-spdx.json
+      title: retail-app-81f9482-sbom-spdx.json
+    - url: https://github.com/scatter-ly/retail-app/actions/runs/7880705970
+      title: GitHub Action Run 7880705970
+  annotations:
+    github.com/project-slug: scatter-ly/retail-app
+spec:
+  type: sbom
+  uri: https://github.com/scatter-ly/retail-app/releases/download/v0.3.4/retail-app-81f9482-sbom-spdx.json
+  lifecycle: production
+  owner:
+    - scatter-ly/alchen99
+  dependsOn:
+    - codecomponent:scatter-ly/retail-app
 
