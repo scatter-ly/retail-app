@@ -1,0 +1,10 @@
+---
+schema-version: v2.1
+dd-service: retail-app
+team: eng-raccoon-cloud
+application: "retail"
+links:
+  - name: https://github.com/scatter-ly/retail-app
+    type: repo
+    provider: github
+    url: https://github.com/scatter-ly/retail-app
