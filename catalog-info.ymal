@@ -1,0 +1,84 @@
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: retail
+  namespace: scatter-ly
+  description: Everything about retail
+spec:
+  type: product-group
+  owner: scatter-ly/eng-raccoon-cloud
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: retail-app
+  namespace: scatter-ly
+  description: Retail app system
+spec:
+  type: service
+  owner: scatter-ly/eng-raccoon-cloud
+  domain: retail
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: retail-app
+  namespace: scatter-ly
+  description: Retail app repository
+spec:
+  type: repository
+  lifecycle: production
+  owner: iscatter-ly/eng-raccoon-cloud
+  system: retail-app
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: retail-app:v0.3.4
+  namespace: scatter-ly
+  description: Retail app container
+spec:
+  type: container
+  owner: scatter-ly/alchen99
+  system: retail-app
+  dependsOn:
+    - component:scatter-ly/retail-app
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: retail-cloud-run
+  namespace: scatter-ly
+  description: Retail app cloud run deployment
+spec:
+  type: cloudrun
+  owner: scatter-ly/alchen99
+  system: retail-app
+  dependsOn:
+    - resource:scatter-ly/retail-app:v0.3.4
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: retail-vm-image
+  namespace: scatter-ly
+  description: Blue Sky / Retail virtual machine Image
+spec:
+  type: vm
+  owner: scatter-ly/it-ops
+  system: retail-app
+  dependsOn:
+    - component:scatter-ly/retail-app
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: retail-vm
+  namespace: scatter-ly
+  description: Blue Sky / Retail virtual machine
+spec:
+  type: vm
+  owner: scatter-ly/it-ops
+  system: retail-app
+  dependsOn:
+    - resource:scatter-ly/retail-vm-image
