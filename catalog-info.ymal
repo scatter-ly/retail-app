@@ -28,7 +28,7 @@ metadata:
 spec:
   type: repository
   lifecycle: production
-  owner: iscatter-ly/eng-raccoon-cloud
+  owner: scatter-ly/eng-raccoon-cloud
   system: retail-app
 ---
 apiVersion: backstage.io/v1alpha1
