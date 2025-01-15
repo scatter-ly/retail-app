@@ -1,0 +1,3 @@
+codecomponent:
+  service: retail
+  dependsOn: [codecomponent:scatter-ly/wholesale-graphql]
