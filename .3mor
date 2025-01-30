@@ -1,3 +1,3 @@
 codecomponent:
-  service: retail
+  service: scatter-ly/retail
   dependsOn: [codecomponent:scatter-ly/greenhouse-data]
