@@ -7,7 +7,7 @@
     "role": "node-library"
   },
   "engines": {
-    "node": "16"
+    "node": "18 || 20"
   },
   "main": "dist/index.js",
   "dependencies": {
