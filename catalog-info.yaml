@@ -1,0 +1,8 @@
+apiVersion: 3mor.io/v1alpha1
+kind: Service
+metadata:
+  name: retail
+  namespace: scatter-ly
+  description: Retail service
+spec:
+  owner: scatter-ly/eng-raccoon-cloud
