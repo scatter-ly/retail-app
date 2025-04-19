@@ -5,4 +5,5 @@ metadata:
   namespace: scatter-ly
   description: Retail service
 spec:
-  owner: scatter-ly/eng-raccoon-cloud
+  owner: 
+    - scatter-ly/eng-raccoon-cloud
