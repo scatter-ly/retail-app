@@ -80,34 +80,8 @@ jobs:
           docker compose build 
           docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:latest"
 
-      - id: create-latest-container-yaml
-        name: Create latest container YAML
-        uses: opencontextinc/create-artifact-yaml@v1
-        with:
-          type: container
-          url: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:latest
-
-      - uses: actions/upload-artifact@v3.1.0
-        with:
-          name: latest-container-yaml
-          path: ${{ steps.create-latest-container-yaml.outputs.filename }}
-
       - name: Tag & Push versioned Container on release
         if: ${{ github.event_name == 'release' }}
         run: |-
           docker tag "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:latest" "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:${GITHUB_REF_NAME}"
           docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:${{ github.ref_name }}"
-
-      - id: create-versioned-container-yaml
-        name: Create versioned container YAML
-        if: ${{ github.event_name == 'release' }}
-        uses: opencontextinc/create-artifact-yaml@v1
-        with:
-          type: container
-          url: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:${{ github.ref_name }}
-
-      - uses: actions/upload-artifact@v3.1.0
-        if: ${{ github.event_name == 'release' }}
-        with:
-          name: versioned-container-yaml
-          path: ${{ steps.create-versioned-container-yaml.outputs.filename }}

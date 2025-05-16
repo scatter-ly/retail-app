@@ -11,18 +11,33 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - id: sbom
-        uses: opencontextinc/generate-sbom-yaml@v1
-        with:
-          upload_yaml: true
-      - name: Check outputs
+      - id: check-prereqs
+        name: Check pre-requisites
+        shell: bash
         run: |
-          env
-          pwd
-          ls -l
-          ls ${{ steps.sbom.outputs.sbom_path }}
-          ls ${{ steps.sbom.outputs.artifact_path }}
-          echo "SBOM PATH = ${{ steps.sbom.outputs.sbom_path }}"
-          echo "SBOM URL = ${{ steps.sbom.outputs.sbom_url }}"
-          echo "Artifact YAML PATH = ${{ steps.sbom.outputs.artifact_path }}"
-          echo "Artifact YAML URL = ${{ steps.sbom.outputs.artifact_url }}"
+          if [[ ${GITHUB_EVENT_NAME} != "release" ]]; then 
+            echo "ERROR: This GitHub action only supports the release event!"
+            exit 1
+          fi
+          shortSHA=$(echo $GITHUB_SHA | head -c7)
+          repoName=$(basename $GITHUB_REPOSITORY)
+          sbomFilename="${repoName}-${shortSHA}-sbom-spdx.json"
+          releaseHtmlUrl=$(jq -r '.release.html_url' $GITHUB_EVENT_PATH)
+          releaseTag=$(basename $releaseHtmlUrl)
+          sbomUrl="${releaseHtmlUrl%%/releases/*}/releases/download/${releaseTag}/${sbomFilename}"
+          echo "sbomFilename=${sbomFilename}" >> "$GITHUB_OUTPUT"
+          echo "sbomUrl=${sbomUrl}" >> "$GITHUB_OUTPUT"
+      - id: generate-sbom
+        name: Generate SBOM
+        uses: advanced-security/sbom-generator-action@v0.0.1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - id: upload-sbom-release
+        name: Upload SBOM as release artifact
+        uses: Shopify/upload-to-release@v1.0.1
+        with:
+          name: ${{ steps.check-prereqs.outputs.sbomFilename }}
+          path: ${{ steps.generate-sbom.outputs.fileName }}
+          repo-token: ${{ github.token }}
+          content-type:  application/json
+      
